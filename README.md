@@ -1,2 +1,2 @@
 # Konayan
-A Konayan hello page readme
+A client for konanchan.net and yande.re
