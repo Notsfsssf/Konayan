@@ -6,6 +6,7 @@ import 'package:konayan/view/page/setting_page.dart';
 import 'package:konayan/view/page/website_page.dart';
 import 'package:konayan/view/widget/bottom_navy_bar.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -39,9 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: Container(
-          color: Colors.white,
-          child: ListView(
+          child: Container(
+        color: Colors.white,
+        child: ListView(
           children: <Widget>[
             DrawerHeader(
               child: Align(
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Image.asset('asset/images/mahou_teriri.jpg'),
               ),
             ),
-           
+
             ListTile(
               title: Text('About'),
               onTap: () {
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             Divider(),
-              ListTile(
+            ListTile(
               title: Text('Creator'),
               subtitle: Text('Perol_Notsfsssf'),
               onTap: () {
@@ -78,18 +79,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
               },
             ),
-             ListTile(
+            ListTile(
               title: Text('Made with'),
               subtitle: Text('Flutter'),
               onTap: () {
                 Navigator.pop(context);
               },
             ),
-
+            ListTile(
+              title: Text('Open Source'),
+              subtitle: Text('https://github.com/Notsfsssf/Konayan'),
+              onTap: () async {
+                Navigator.pop(context);
+                const url = 'https://github.com/Notsfsssf/Konayan';
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+            )
             //  ListTile(leading: Image.asset('asset/images/mahou_teriri.jpg'),),
           ],
-        ),)
-      ),
+        ),
+      )),
       appBar: AppBar(
         elevation: _selectedIndex == 1 ? 0 : null,
         leading: Builder(
@@ -213,4 +226,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

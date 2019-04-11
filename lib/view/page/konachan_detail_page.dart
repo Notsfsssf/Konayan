@@ -26,6 +26,8 @@ class _konachanDetailPageState extends State<KonachanDetailPage> {
   static const platform = const MethodChannel('samples.flutter.io/battery');
   Size deviceSize;
 
+  int _newValue = 0;
+
   Widget appBarColumn(BuildContext context) => SafeArea(
         child: new Column(
           children: <Widget>[
@@ -82,48 +84,95 @@ class _konachanDetailPageState extends State<KonachanDetailPage> {
   _showSaveDialog(DetailNotifier model, BuildContext context) {
     showDialog(
         context: context,
-        builder: (_) => new AlertDialog(
-                title: new Text("Title"),
-                content: new Text("Save?"),
-                actions: <Widget>[
-                  FlatButton(
-                    child: new Text("CANCEL"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  Consumer<SettingNotifier>(builder: (BuildContext contexts, value) {
-                  return  FlatButton(
-                        child: new Text("OK"),
-                        onPressed: () async {
+        builder: (_) => StatefulBuilder(
+              builder: (_, setState) {
+                return AlertDialog(
+                    title: new Text("Title"),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          RadioListTile<int>(
+                            value: 0,
+                            title: Text('Source'),
+                            groupValue: _newValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _newValue = value;
+                              });
+                            },
+                          ),
+                          RadioListTile<int>(
+                            value: 1,
+                            title: Text('Preview'),
+                            groupValue: _newValue,
+                            onChanged: (value) {
+                              setState(() {
+                                _newValue = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: new Text("CANCEL"),
+                        onPressed: () {
                           Navigator.of(context).pop();
-                          Scaffold.of(context).showSnackBar(SnackBar(content: Text('start download'),));
-                          final path = await model.saveToGallery(
-                              widget.post.fileUrl, widget.post.id.toString(),value.storagePath,value.option);
-                          if (path == null) {
-                            if (!mounted) return;
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text("already saved"),
-                              action: SnackBarAction(
-                                  label: "Retry",
-                                  onPressed: () async {
-                                    final path = await model.reSaveToGallery(
-                                        widget.post.fileUrl,
-                                        widget.post.id.toString(),value.storagePath,value.option);
-                                           if (!mounted) return;
-                             Scaffold.of(context).showSnackBar(SnackBar(content: Text("saved"),));
-                                  }),
-                            ));
-                          } else {
-                            await platform
-                                .invokeMethod('mediaScan', {'uriString': path});
-                                 if (!mounted) return;
-                                 Scaffold.of(context).showSnackBar(SnackBar(content: Text("saved"),));
-                          }
                         },
-                      );
-                  },)
-                ]));
+                      ),
+                      Consumer<SettingNotifier>(
+                        builder: (BuildContext contexts, value) {
+                          return FlatButton(
+                            child: new Text("OK"),
+                            onPressed: () async {
+                              final url = _newValue == 0
+                                  ? widget.post.fileUrl
+                                  : widget.post.previewUrl;
+                              Navigator.of(context).pop();
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                content: Text('start download'),
+                              ));
+                              final path = await model.saveToGallery(
+                                  url,
+                                  widget.post.id.toString(),
+                                  value.storagePath,
+                                  value.option);
+                              if (path == null) {
+                                if (!mounted) return;
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("already saved"),
+                                  action: SnackBarAction(
+                                      label: "Retry",
+                                      onPressed: () async {
+                                        final path =
+                                            await model.reSaveToGallery(
+                                                url,
+                                                widget.post.id.toString(),
+                                                value.storagePath,
+                                                value.option);
+                                        if (!mounted) return;
+                                        Scaffold.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text("saved"),
+                                        ));
+                                      }),
+                                ));
+                              } else {
+                                await platform.invokeMethod(
+                                    'mediaScan', {'uriString': path});
+                                if (!mounted) return;
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("saved"),
+                                ));
+                              }
+                            },
+                          );
+                        },
+                      )
+                    ]);
+              },
+            ));
   }
 
   List<Tag> _computeTags() {
@@ -172,13 +221,12 @@ class _konachanDetailPageState extends State<KonachanDetailPage> {
           ),
           ListTile(
             title: Text("Size"),
-            subtitle:
-                Text((widget.post.fileSize.toString())),
+            subtitle: Text((widget.post.fileSize.toString())),
           ),
           ListTile(
               title: Text("Pixel"),
               subtitle: Text('${widget.post.width}x${widget.post.height}')),
-          ListTile(title: Text("Source"), subtitle:Text(widget.post.source)),
+          ListTile(title: Text("Source"), subtitle: Text(widget.post.source)),
           ListTile(title: Text("Rating"), subtitle: Text(widget.post.rating)),
         ],
       ),

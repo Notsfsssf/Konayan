@@ -7,7 +7,7 @@ or [CoolApk](https://www.coolapk.com/apk/222995),
 [Google Play](https://play.google.com/store/apps/details?id=me.perol.play.konayan)
 # Preview
 |![homepreview.png Gif](homepreview.png "homepreview.png")|![settingpreview.png Gif](settingpreview.png "settingpreview.png")|![websitepreview.png Gif](websitepreview.png "websitepreview.png")|
-|:-------------------:|:------------------------:|:------------------------:|:------------------------:|
+|:-------------------:|:------------------------:|:------------------------:|
 # FeedBack
 email:PxezFeedBack@outlook.com
 # Third-party dependency
