@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:konayan/model/tag.dart';
 import 'package:konayan/service/sql_service.dart';
 import 'package:objectdb/objectdb.dart';
 

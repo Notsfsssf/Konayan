@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:konayan/notifier/db_notifier.dart';
 import 'package:konayan/notifier/pref_notifier.dart';
 import 'package:konayan/notifier/setting_notifier.dart';
-import 'package:konayan/view/page/hello_page.dart';
 import 'package:konayan/view/page/home_page.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch:value.option==0? Colors.deepOrange:Colors.deepPurple,
             ),
-            home:value.domain=='konachan.net'||value.domain== 'yande.re'? MyHomePage(title: 'Flutter Home Page'):HelloPage(),
+            home: MyHomePage(title: 'Flutter Home Page'),
           ), ),
           notifier: PrefNotifier()..fetchData(),
         ),

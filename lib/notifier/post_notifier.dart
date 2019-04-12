@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konayan/model/post.dart';
 import 'package:konayan/service/konachan_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PostNotifier extends ChangeNotifier {
   List<Post> _posts;

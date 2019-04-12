@@ -8,7 +8,6 @@ import 'package:konayan/notifier/detail_notifier.dart';
 import 'package:konayan/notifier/setting_notifier.dart';
 import 'package:konayan/view/page/zoom_page.dart';
 import 'package:konayan/view/widget/tag_view.dart';
-import 'package:konayan/view/widget/toast.dart';
 import 'package:provider/provider.dart';
 
 class KonachanDetailPage extends StatefulWidget {

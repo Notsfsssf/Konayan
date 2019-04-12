@@ -1,10 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:konayan/api/modules.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:konayan/service/konachan_service.dart';
 class SettingNotifier extends ChangeNotifier {
   String _storagePath;
   String _domain = '';

@@ -12,7 +12,6 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
-    // TODO: implement initState
 
     super.initState();
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:konayan/notifier/post_notifier.dart';
+import 'package:konayan/notifier/setting_notifier.dart';
 import 'package:konayan/view/page/konachan_detail_page.dart';
 import 'package:konayan/view/widget/super_drawer.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,8 @@ class KonachanPostPage extends StatefulWidget {
   final String tag;
   final List<String> allowList;
   static const List<String> a = ['s', 'q', 'e'];
-  KonachanPostPage({Key key, this.tag, this.allowList = a}) : super(key: key);
+  int option=0;
+  KonachanPostPage({Key key, this.tag, this.allowList = a,this.option}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _KonachanPostState();
@@ -21,7 +23,7 @@ class KonachanPostPage extends StatefulWidget {
 }
 
 class _KonachanPostState extends State<KonachanPostPage>
-    with AutomaticKeepAliveClientMixin {
+  {
   ScrollController _scrollController;
   PostNotifier _viewModel;
   int page;
@@ -172,7 +174,5 @@ class _KonachanPostState extends State<KonachanPostPage>
     );
   }
 
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
+
 }
